@@ -36,12 +36,12 @@ namespace OpenUtau.Plugin.Builtin {
             g2ps.Add(G2pDictionary.NewBuilder().Load(File.ReadAllText(path)).Build());
             
             // Attempt to load dictionary from Dictionaries folder.
-            protected override string GetDictionaryName() => "dict.json";
+            protected override string GetDictionaryName() => "dict.yaml";
             protected override Dictionary<string, string> GetDictionaryPhonemesReplacement() => dictionaryReplacements;
 
             // Load dictionary from singer folder.
             if (singer != null && singer.Found && singer.Loaded) {
-                string file = Path.Combine(singer.Location, "dict.json");
+                string file = Path.Combine(singer.Location, "dict.yaml");
                 if (File.Exists(file)) {
                     try {
                         g2ps.Add(G2pDictionary.NewBuilder().Load(File.ReadAllText(file)).Build());
