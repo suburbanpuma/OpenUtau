@@ -7,15 +7,16 @@ using Serilog;
 
 namespace OpenUtau.Plugin.Builtin {
     /// <summary>
-    /// The English Arpasing Phonemizer.
+    /// Spanish [e ny e] compatible dictionary.
     /// <para>
-    /// Arpasing is a system that uses CMUdict as dictionary to convert English words to phoneme symbols.
-    /// See http://www.speech.cs.cmu.edu/cgi-bin/cmudict and https://arpasing.neocities.org/en/faq.html.
+    /// [e ny e] uses a custom phonetic system that is backwards compatible with the old CVVC Spanish encoding.
+    /// [e ny e] is completely diphonic, and triphones (ej. bla) are not supported. VCV Spanish is not supported.
+    /// You can use your favorite classic CVVC/VCV Spanish banks with the Spanish Syllable-Based Phonemizer, by Lotte V. You should give her all ur money btw, she makes great stuff.
     /// </para>
     /// </summary>
-    [Phonemizer("[e ny e] Phonemizer", "ES [NY]")]
-    public class ArpasingPhonemizer : LatinDiphonePhonemizer {
-        public ArpasingPhonemizer() {
+    [Phonemizer("[e ny e] Phonemizer", "ES [NY]", "subpum")]
+    public class EnyePhonemizer : LatinDiphonePhonemizer {
+        public EnyePhonemizer() {
             try {
                 Initialize();
             } catch (Exception e) {
@@ -26,7 +27,7 @@ namespace OpenUtau.Plugin.Builtin {
         protected override IG2p LoadG2p() {
             var g2ps = new List<IG2p>();
 
-            // Load dictionary from plugin folder.
+            // Load phonemes from plugin folder.
             string path = Path.Combine(PluginDir, "phonemes.yaml");
             if (!File.Exists(path)) {
                 Directory.CreateDirectory(PluginDir);
